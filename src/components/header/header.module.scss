@@ -1,0 +1,46 @@
+@import '../../variables.scss';
+.header {
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
+    h1 {
+        margin: 0;
+        font-size: 28px;
+        color: $orange;
+        span {
+            color: $blue;
+        }
+    }
+    .navigation {
+        ul {
+            padding: 0;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            li {
+                a {
+                    color: $blue;
+                }
+                a:hover {
+                    color: $orange;
+                }
+            }
+            li:not(:first-of-type) {
+                margin-left: 20px;
+            }
+        }
+    }
+    .login {
+        border: none;
+        font-size: 18px;
+        border-radius: 4px;
+        padding: 5px 20px;
+        background-color: $blue;
+        color: #fff;
+    }
+    .login:hover {
+        background-color: $orange;
+    }
+}
