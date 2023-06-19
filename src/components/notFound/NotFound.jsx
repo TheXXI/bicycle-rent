@@ -6,7 +6,7 @@ export const NotFound = () => {
         <div className={css.notfound}>
             <h2>Ошибка 404</h2>
             <img src={notFoundImage} alt="Ошибка 404" />
-            По данному адресу страница отстутсвует.
+            Страница не найдена.
         </div>
     )
 }

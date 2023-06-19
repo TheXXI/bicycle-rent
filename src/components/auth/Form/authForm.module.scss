@@ -1,0 +1,49 @@
+@import '../../../variables.scss';
+.form {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    width: 429px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding: 25px;
+    label:not(:first-of-type) {
+        margin-top: 20px;
+    }
+    label:last-of-type {
+        margin-bottom: 30px;
+    }
+    input[type="submit"] {
+        border: none;
+        border-radius: 5px;
+        margin: 0;
+        padding: 16px;
+        background-color: $blue;
+        color: #fff;
+        font-size: 20px;
+        height: auto;
+    }
+    input[type="submit"]:hover {
+        background-color: $orange;
+    }
+}
+
+.change-auth-from {
+    font-size: 16px;
+    color: #949494;
+    margin: 20px auto 0 auto;
+    background: none;
+    border: none;
+}
+
+.change-auth-from:hover {
+    color: $blue;
+}
+
+@media screen and (max-width: 450px) {
+    .form {
+        width: 100%;
+        margin: 0 20px;
+    }
+}

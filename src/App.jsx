@@ -2,9 +2,9 @@ import {Route, Routes } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { Auth } from './components/auth/Auth';
 import { NotFound } from './components/notFound/NotFound';
+import { Report } from './components/report/Report';
 
 
-const About = () => <div>report</div>
 const Posts = () => <div>prices</div>
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Auth />} />
           <Route path="/prices" element={<Posts />} />
-          <Route path="/report" element={<About />} />
+          <Route path="/report" element={<Report />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

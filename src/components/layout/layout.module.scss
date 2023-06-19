@@ -1,5 +1,5 @@
 @import '../../variables.scss';
 .wrapper {
-    width: $wrapper-width;
+    max-width: $wrapper-width;
     margin: 0 auto;
 }
