@@ -5,7 +5,9 @@ import { IconOpenBurger } from './icons/OpenBurger';
 import { useState } from 'react';
 
 const Navigation = (props) => {
-    const hideMobile = () => props.closeMenu(false)
+    const hideMobile = () => {
+        return props.closeMenu ? props.closeMenu(false) : null
+    } 
     return (
         <nav className={css.navigation}>
             <ul>
