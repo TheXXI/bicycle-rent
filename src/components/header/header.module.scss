@@ -15,6 +15,27 @@
     .burger {
         display: none;
     }
+    .profile {
+        display: flex;
+        //border: 1px solid black;
+        .text-elements {
+            display: flex;
+            flex-direction: column;
+            .login {
+                font-size: 14px;
+            }
+            .exit-button {
+                background: none;
+                border: none;
+                align-self: flex-end;
+                font-size: 12px;
+                color: #949494;
+                justify-self: flex-end;
+                margin: 0;
+                padding: 0;
+            }
+        }
+    }
 }
 
 .navigation {
@@ -37,7 +58,7 @@
     }
 }
 
-.login {
+.lobin-button {
     border: none;
     font-size: 18px;
     border-radius: 4px;
@@ -46,7 +67,7 @@
     color: #fff;
 }
 
-.login:hover {
+.lobin-button:hover {
     background-color: $orange;
 }
 
@@ -59,7 +80,8 @@
         height: 70px;
         padding: 10px 20px;
         .navigation,
-        .login {
+        .lobin-button,
+        .profile {
             display: none;
         }
         .burger {
@@ -75,6 +97,8 @@
         background-color: #fff;
         border-top: 1px solid black;
         border-bottom: 1px solid black;
+        text-align: center;
+        padding-bottom: 10px;
         .navigation {
             display: block;
             ul {
@@ -87,12 +111,23 @@
                 }
             }
         }
-        .login {
+        .lobin-button {
             display: block;
             width: 100px;
             margin: 0 auto;
             text-align: center;
             margin-bottom: 15px;
+        }
+        .login {
+            font-size: 19px;
+        }
+        .exit-button {
+            background: none;
+            border: none;
+            font-size: 19px;
+            color: $blue;
+            margin: 0;
+            padding: 0;
         }
     }
 }

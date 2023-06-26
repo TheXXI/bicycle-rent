@@ -11,13 +11,10 @@
     label:not(:first-of-type) {
         margin-top: 20px;
     }
-    label:last-of-type {
-        margin-bottom: 30px;
-    }
     input[type="submit"] {
+        margin-top: 30px;
         border: none;
         border-radius: 5px;
-        margin: 0;
         padding: 16px;
         background-color: $blue;
         color: #fff;
@@ -26,6 +23,16 @@
     }
     input[type="submit"]:hover {
         background-color: $orange;
+    }
+    input[type="submit"]:disabled {
+        cursor: auto;
+        background-color: gray;
+    }
+    input[type="submit"]:disabled:hover {
+        background-color: gray;
+    }
+    .required {
+        color: red;
     }
 }
 
@@ -39,6 +46,11 @@
 
 .change-auth-from:hover {
     color: $blue;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
 }
 
 @media screen and (max-width: 450px) {

@@ -29,7 +29,7 @@ export const Report = () => {
             </div>
             
             <label className={css.date}>Дата кражи:
-                <input type="text" />
+                <input type="date" />
             </label>
 
             <label>Дополнительная информация:
