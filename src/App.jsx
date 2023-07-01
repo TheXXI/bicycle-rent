@@ -1,8 +1,9 @@
 import {Route, Routes } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
-import { Auth } from './components/auth/Auth';
+import { Login } from './components/login/Login';
 import { NotFound } from './components/notFound/NotFound';
-import { Report } from './components/report/Report';
+import { SendCase } from './components/sendCase/SendCase';
+import { Cases } from './components/cases/Cases';
 
 
 const Posts = () => <div>prices</div>
@@ -12,9 +13,10 @@ function App() {
     
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Auth />} />
+          <Route index element={<Login />} />
           <Route path="/prices" element={<Posts />} />
-          <Route path="/report" element={<Report />} />
+          <Route path="/report" element={<SendCase />} />
+          <Route path="/cases" element={<Cases />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

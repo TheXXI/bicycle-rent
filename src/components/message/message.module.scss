@@ -1,0 +1,25 @@
+.message-block {
+    top: 90px;
+    position: absolute;
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border: 1px solid gray;
+    min-width: 320px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    >* {
+        margin: 15px;
+    }
+    .message {
+        margin-left: 10px;
+    }
+    .close {
+        margin: 6px 6px 0 0;
+        align-self: start;
+    }
+}
