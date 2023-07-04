@@ -1,13 +1,21 @@
 import css from './login.module.scss'
-import bicycle from './images/first-bicycle.jpg' 
-import { AuthFrom } from './Form/Form';
-import { Message } from '../message/Message';
+import bicycle from '../assets/images/first-bicycle.jpg' 
+import { From } from './Form/Form';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
-
-export const Login = () => {
+export const Login = () => {  
+    const user = useSelector(state => state.user.user)
+    const navigate = useNavigate() 
+    useEffect(() => {
+        if (user) {
+            navigate('/cases');
+        }
+    })
     
     return (
-        <div className={css.auth}>
+        <div className={css.login}>
             <div className={css.content}>
 
                 <div className={css.cover}>
@@ -15,7 +23,7 @@ export const Login = () => {
                 <h1>Войдите на сайт, чтобы<br/>арендовать ближайший велосипед</h1>
                 </div>
 
-                <AuthFrom/>
+                <From/>
             </div>
         </div>
     )

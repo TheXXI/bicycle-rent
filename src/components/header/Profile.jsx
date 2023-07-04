@@ -1,18 +1,37 @@
+import { useDispatch, useSelector } from 'react-redux';
 import css from './header.module.scss'
-import { IconProfile } from './icons/Profile';
+import { IconProfile } from '../assets/icons/Profile';
+import { removeUser } from '../../store/userReducer';
+import { Link } from "react-router-dom"
 
-export const Profile = (props) => {
-    const {email, firstname, lastname} = props.user;
+export const Profile = () => {
+    const user = useSelector(state => state.user.user)
+    const dispatch = useDispatch()
 
     return (
+        <>
+        {user ?
         <div className={css.profile}>
             <div className={css['text-elements']}>
                 <span className={css.login}>
-                            { firstname && lastname ? firstname + " " + lastname[0] + "." : email }
+                    { user.info.firstname && user.info.lastname ? user.info.firstname + " " + user.info.lastname[0] + "." : user.info.email }
                 </span>
-                <button className={css['exit-button']}>Выйти</button>
+                <button className={css['exit-button']} onClick={
+                        () => {
+                            dispatch(removeUser())
+                            localStorage.clear();
+                        }}>Выйти</button>
             </div>
             <IconProfile/>
-        </div>
+        </div> :
+        <Link to="/" className={css['lobin-button']}>Вход</Link> }
+        </>
     )
 }
+
+/*
+
+{user ? 
+            <Profile /> :
+            <Link to="/" className={css['lobin-button']}>Вход</Link>
+            }*/

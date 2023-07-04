@@ -31,9 +31,6 @@
     input[type="submit"]:disabled:hover {
         background-color: gray;
     }
-    .required {
-        color: red;
-    }
 }
 
 .change-auth-from {
@@ -46,11 +43,6 @@
 
 .change-auth-from:hover {
     color: $blue;
-}
-
-.error {
-    color: red;
-    font-size: 12px;
 }
 
 @media screen and (max-width: 450px) {

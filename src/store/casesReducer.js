@@ -70,6 +70,3 @@ export const casesReducer = (state = defaultState, action) => {
             return state
     }
 }
-
-export const setMessageUnknownUser = () => ({ type: "SET_UNKNOWN_USER" });
-export const removeMessageUnknownUser = () => ({ type: "REMOVE_UNKNOWN_USER" });

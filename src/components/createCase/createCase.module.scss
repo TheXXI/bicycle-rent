@@ -1,0 +1,22 @@
+@import '../../variables.scss';
+.content {
+    label {
+        margin-top: 25px;
+    }
+    input[type="submit"] {
+        border: none;
+        border-radius: 5px;
+        margin: 10px 0 0 0;
+        padding: 10px;
+        background-color: $blue;
+        color: #fff;
+        font-size: 16px;
+        height: auto;
+    }
+    input[type="submit"]:hover {
+        background-color: $orange;
+    }
+    @media screen and (max-width: 1250px) {
+        margin: 0 15px;
+    }
+}
