@@ -1,9 +1,9 @@
 import css from './message.module.scss';
-import { IconSuccess } from '../assets/icons/Success';
-import { IconFailure } from '../assets/icons/Failure';
-import { IconClose } from '../assets/icons/Close';
+import { IconSuccess } from '../../assets/icons/Success';
+import { IconFailure } from '../../assets/icons/Failure';
+import { IconClose } from '../../assets/icons/Close';
 import { useDispatch } from 'react-redux';
-import { removeMessage } from '../../store/infoMessagesReducer';
+import { removeMessage } from '../../../store/infoMessagesReducer';
 
 //<Message message={{success: false, message: "Произошла ошибка"}}/>
 

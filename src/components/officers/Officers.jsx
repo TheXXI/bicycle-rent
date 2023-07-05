@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { IconClose } from "../assets/icons/Close";
-import { getAllOfficers } from "../../requests/officers";
+import { deleteOfficerr, getAllOfficers } from "../../requests/officers";
 import { Spinner } from "../loaderSpinner/Spinner";
 import { setNoLoadedOfficers } from "../../store/officersReducer";
 
@@ -19,11 +19,15 @@ export const Officers = () => {
 
     const dispatch = useDispatch()
 
+    const deleteOfficer = (id) => {
+        dispatch( deleteOfficerr(id));
+     }
+
     useEffect(() => {
         dispatch(setNoLoadedOfficers())
         console.log('запрос сотрудников')
         dispatch(getAllOfficers())
-    },[])
+    },[dispatch])
 
     const {isLoaded, officers } = useSelector(state => state.officers)
     console.log(officers)
@@ -45,15 +49,15 @@ export const Officers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {officers.map((officer) => (
-                            <tr key={officers._id} onClick={() => console.log('open')}>
+                        {officers.map((officer, index) => (
+                            <tr key={index} onClick={() => console.log('open')}>
                                 <td>{officer.email}</td>
                                 <td>{officer.firstName}</td>
                                 <td>{officer.lastName}</td>
                                 <td>{officer.approved ? "Одобрен" : "Не одобрен"}</td>
                                 <td onClick={(e) => {
-                                    e.stopPropagation()
-                                    console.log('close')
+                                    e.stopPropagation();
+                                    deleteOfficer(officer._id);
                                     }}><IconClose/>
                                 </td>
                             </tr>

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import css from './header.module.scss'
-import { IconProfile } from '../assets/icons/Profile';
-import { removeUser } from '../../store/userReducer';
+import { IconProfile } from '../../assets/icons/Profile';
+import { removeUser } from '../../../store/userReducer';
 import { Link } from "react-router-dom"
 
 export const Profile = () => {

@@ -2,9 +2,9 @@ import { Outlet } from "react-router-dom"
 import {useEffect} from "react";
 import { useDispatch } from 'react-redux';
 import css from "./layout.module.scss"
-import { Header } from "../header/Header"
+import { Header } from "./header/Header"
 import { auth } from '../../requests/auth';
-import { MessageBlock } from "../message/MessageBlock";
+import { MessageBlock } from "./message/MessageBlock";
 
 export const Layout = () => {
     useEffect( () => console.log('rerender Layout'))

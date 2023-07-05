@@ -2,11 +2,11 @@ import css from './header.module.scss';
 import { Link } from "react-router-dom"
 import { Navigation } from './Nafigation';
 import { useSelector, useDispatch } from 'react-redux';
-import { IconBurger } from '../assets/icons/Burger';
-import { IconOpenBurger } from '../assets/icons/OpenBurger';
+import { IconBurger } from '../../assets/icons/Burger';
+import { IconOpenBurger } from '../../assets/icons/OpenBurger';
 import { useState } from 'react';
 import { Profile } from './Profile';
-import { removeUser } from '../../store/userReducer';
+import { removeUser } from '../../../store/userReducer';
 
 /*const isEntered () => {
     const user = useSelector(state => state.user.user)
