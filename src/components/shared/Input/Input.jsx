@@ -1,13 +1,20 @@
 import css from "./input.module.scss";
 
 export const Input = (props) => {
+    const isCheckbox = props.type === "checkbox" ? 
+    {
+        flexDirection: 'row',
+        justifyContent: 'start',
+        alignItems: 'center'
+    } 
+    : undefined;
     return (
-        <label className={css.label}>
+        <label className={css.label} style={isCheckbox}>
             {props.required ?
-                <span>{props.children}<span className="required">*</span>:</span>:
-                props.children
+                <span>{props.label}<span className="required">*</span>:</span>:
+                props.label + ":"
             }
-            <input type={props.type} value={props.value} onChange={props.onChange}/>
+            <input type={props.type ? props.type : "text"} value={props.value} onChange={props.onChange}/>
         </label>
     )
 }

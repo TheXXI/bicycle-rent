@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Spinner } from "../loaderSpinner/Spinner";
 import { getOfficer } from "../../requests/officers";
 import { Button } from "../shared/Button/Button";
+import { Input } from "../shared/Input/Input";
 
 export const SingleOfficer = () => {
     useEffect( () => {console.log('rerender SingleOfficer')});
@@ -22,9 +23,28 @@ export const SingleOfficer = () => {
     useEffect(() => {
        dispatch(getOfficer(id));
        console.log('getOfficer');
+       console.log(officer);
     },[])
 
+    const [isEdit, setIsEdit] = useState(false);
 
+    
+    const [firstname, setFirstname] = useState(officer ? officer.firstName : '');
+    const [lastname, setLastname] = useState(officer ? officer.lastName : '');
+    const [approved, setApproved] = useState(officer ? officer.approved : false);
+
+    useEffect(() => {
+        if (officer) {
+            setFirstname(officer.firstName ? officer.firstName : '');
+            setLastname(officer.lastName ? officer.lastName : '');
+            setApproved(officer.approved);
+            console.log('set', approved);
+        }
+    }, [officer])
+
+    const handleClick = () => {
+        console.log(firstname, lastname, approved)
+    }
 
     return(
         <>
@@ -34,13 +54,42 @@ export const SingleOfficer = () => {
 
                 <p>Email: {officer.email}</p>
                 <p>Имя: {officer.firstName === null ? "Не указано" : officer.firstName}</p>
+                {isEdit && 
+                <Input 
+                    label={"Имя"}
+                    value={firstname}
+                    onChange={(e) => setFirstname(e.target.value) }/>
+                }
+
                 <p>Фамилия: {officer.lastName === null ? "Не указано" : officer.lastName}</p>
+                {isEdit && 
+                <Input 
+                    label={"Фамилия"}
+                    value={lastname} 
+                    onChange={(e) => setLastname(e.target.value) }/>
+                }
+
                 <p>Одобрен: {officer.approved ? "Да" : "Нет"}</p>
 
-                <Button>Изменить</Button>
+                {isEdit && 
+                <Input 
+                    label={"Одобрен"}
+                    type={"checkbox"}
+                    defaultСhecked={true} 
+                    onChange={() => setApproved(!approved) }/>
+                }
+
+                {user.approved && 
+                    <Button onClick={() => {
+                        isEdit ? handleClick() : setIsEdit(true)
+                    }}>{isEdit ? "Отправить" : "Изменить"}</Button>
+                }
+                &nbsp;
+                {isEdit &&<Button onClick={() => setIsEdit(false)}>Отмена</Button>}
             </div> :
             <Spinner />
         }
+        <input type="checkbox" name="" id="" checked={approved}/>
         </>
     )
 }

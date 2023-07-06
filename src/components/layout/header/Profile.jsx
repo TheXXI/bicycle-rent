@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import css from './header.module.scss'
 import { IconProfile } from '../../assets/icons/Profile';
 import { removeUser } from '../../../store/userReducer';
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Button } from '../../shared/Button/Button';
 
 export const Profile = () => {
@@ -27,7 +27,7 @@ export const Profile = () => {
             <IconProfile/>
         </div> :
         <div className={css['profile-button']}>
-            <Button onClick={() => navigate('/')}>Войти1</Button>
+            <Link to="/" className={css['login-button']}>Вход</Link>
         </div>
         }
         </>

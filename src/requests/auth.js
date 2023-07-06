@@ -10,7 +10,8 @@ export const signUp = (email, password, firstname, lastname) => {
         let body = {
             email,
             password,
-            clientId
+            clientId,
+            approved: true
         }
         if (firstname) body.firstName = firstname
         if (lastname) body.lastName = lastname

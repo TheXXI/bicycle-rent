@@ -1,5 +1,5 @@
 import css from './header.module.scss';
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Navigation } from './Nafigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { IconBurger } from '../../assets/icons/Burger';
@@ -44,12 +44,14 @@ export const Header = () => {
                         () => {
                             dispatch(removeUser());
                             localStorage.clear();
+                            setIsOpenMobileMenu(false);
                         }}>Выйти</button>
                 </>:
-                <Button onClick={() => {
-                    navigate('/');
-                    setIsOpenMobileMenu(false);
-                }}>Войти</Button>}
+                // <Button onClick={() => {
+                //     navigate('/');
+                //     setIsOpenMobileMenu(false);
+                // }}>Войти</Button>}
+                <Link to="/" className={css['login-button']} onClick={() => setIsOpenMobileMenu(false)}>Вход</Link> }
             </div>}
         </>
     )
