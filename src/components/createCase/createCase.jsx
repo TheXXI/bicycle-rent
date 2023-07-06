@@ -9,9 +9,9 @@ import { getAllOfficers } from '../../requests/officers';
 import { setNoLoadedOfficers } from '../../store/officersReducer';
 
 export const CreateCase = () => {
-    const user = useSelector(state => state.user.user)
+    const user = useSelector(state => state.user.user);
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     
     useEffect( () => console.log('rerender Form'))
 
@@ -31,26 +31,26 @@ export const CreateCase = () => {
     const [description, setDescription] = useState('');
 
     const handleClick = () => {
-        if (licenseNumber.trim() === '') setLicenseNumberIsEmpty(true)
-        if (ownerFullName.trim() === '') setOwnerFullNameIsEmpty(true)
-        if (type === '') setTypeIsEmpty(true)
+        if (licenseNumber.trim() === '') setLicenseNumberIsEmpty(true);
+        if (ownerFullName.trim() === '') setOwnerFullNameIsEmpty(true);
+        if (type === '') setTypeIsEmpty(true);
 
         if (licenseNumber.trim() !== '' && ownerFullName.trim() !== '' && type !== '') {
-            dispatch(createCase(licenseNumber, ownerFullName, type, color, date, description))
+            dispatch(createCase(licenseNumber, ownerFullName, type, color, date, officer, description));
         }
     }
 
     useEffect(() => {
-        dispatch(setNoLoadedOfficers())
-        console.log('запрос сотрудников')
-        dispatch(getAllOfficers())
+        dispatch(setNoLoadedOfficers());
+        console.log('запрос сотрудников');
+        dispatch(getAllOfficers());
     },[])
 
-    const {isLoaded, officers } = useSelector(state => state.officers)
+    const {isLoaded, officers } = useSelector(state => state.officers);
     console.log(officers)
 
     const getApprovedOfficers = () => {
-        return officers.filter(item => item.approved === true)
+        return officers.filter(item => item.approved === true);
     }
 
     return (

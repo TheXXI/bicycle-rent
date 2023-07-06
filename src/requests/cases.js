@@ -5,7 +5,7 @@ import { setMessage } from "../store/infoMessagesReducer";
 const clientId = '6d5f17ab-9b5d-44d6-bc42-aa1617498f4d';
 const url = 'https://sf-final-project-be.herokuapp.com/api/';
 
-export const createCase = (licenseNumber, ownerFullName, type, color, date, description) => {
+export const createCase = (licenseNumber, ownerFullName, type, color, date, officer, description) => {
     return function(dispatch) {
         const user = store.getState().user.user;
 
@@ -18,6 +18,7 @@ export const createCase = (licenseNumber, ownerFullName, type, color, date, desc
 
         if (color) body.color = color
         if (date) body.date = date
+        if (officer) body.officer = officer
         if (description) body.description = description
 
         let headers = {

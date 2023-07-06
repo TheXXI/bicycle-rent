@@ -11,6 +11,8 @@ export const officerReducer = (state = defaultState, action) => {
             return {...state, isLoaded: false }
         case "SET_LOADED":
             return {...state, isLoaded: true }
+        case "REMOVE_OFFICER":
+            return state
         default:
             return state
     }
