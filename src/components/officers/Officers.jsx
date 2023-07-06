@@ -19,15 +19,22 @@ export const Officers = () => {
 
     const dispatch = useDispatch()
 
-    const deleteOfficer = (id) => {
-        dispatch( deleteOfficerr(id));
-     }
+    
 
+    useEffect(() => {
+        console.log('dispatch')
+      }, [dispatch]);
+
+    
     useEffect(() => {
         dispatch(setNoLoadedOfficers())
         console.log('запрос сотрудников')
         dispatch(getAllOfficers())
-    },[dispatch])
+    },[])
+
+    const deleteOfficer = (id) => {
+        dispatch( deleteOfficerr(id));
+     }
 
     const {isLoaded, officers } = useSelector(state => state.officers)
     console.log(officers)
@@ -50,7 +57,7 @@ export const Officers = () => {
                     </thead>
                     <tbody>
                         {officers.map((officer, index) => (
-                            <tr key={index} onClick={() => console.log('open')}>
+                            <tr key={index} onClick={() => navigate(officer._id)}>
                                 <td>{officer.email}</td>
                                 <td>{officer.firstName}</td>
                                 <td>{officer.lastName}</td>

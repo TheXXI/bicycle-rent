@@ -1,0 +1,17 @@
+@import "../../../variables.scss";
+
+.button {
+        border: none;
+        border-radius: 5px;
+        margin: 10px 0 0 0;
+        padding: 10px;
+        background-color: $blue;
+        color: #fff;
+        font-size: 16px;
+        height: auto;
+    
+}
+
+.button:hover {
+    background-color: $orange;
+}

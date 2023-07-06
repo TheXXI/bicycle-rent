@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { createCase } from '../../requests/cases';
 import css from './createCase.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button } from '../shared/Button/Button';
+import { Input } from '../shared/Input/Input';
 
 export const CreateCase = () => {
     const user = useSelector(state => state.user.user)
@@ -73,6 +75,10 @@ export const CreateCase = () => {
                     setColor(e.target.value)
                 }}/>
             </label>
+
+            {/* <Input type={"text"} value={color} onChange={(e) => {
+                    setColor(e.target.value)
+            }}>Цвет велосипеда:</Input> */}
             
             
             <label className={css.date}>Дата кражи:
@@ -96,7 +102,8 @@ export const CreateCase = () => {
                 }}></textarea>
             </label>
 
-            <input type="submit" value="Отправить" className={css.submit} onClick={() => handleClick()}/>
+            {/* <input type="submit" value="Отправить" className={css.submit} onClick={() => handleClick()}/> */}
+            <Button onClick={() => handleClick()}>Отправить</Button>
 
         </div>
     )

@@ -5,11 +5,13 @@ import { userReducer } from './userReducer'
 import { infoMessagesReducer } from './infoMessagesReducer';
 import { casesReducer } from './casesReducer';
 import { officerReducer } from './officersReducer';
+import { singleOfficerReducer } from './singleOfficerReducer';
 
 const rootReduser = combineReducers({
     user: userReducer,
     messagesAndLoader: infoMessagesReducer,
     officers: officerReducer,
+    singleOfficer: singleOfficerReducer,
     cases: casesReducer,
 })
 

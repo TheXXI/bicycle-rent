@@ -1,5 +1,5 @@
 const defaultState = {
-    "officers": [],
+    officers: [],
     isLoaded: false
 }
 

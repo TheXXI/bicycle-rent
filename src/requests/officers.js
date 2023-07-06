@@ -1,6 +1,7 @@
 import axios from "axios";
 import { setAllOfficers } from "../store/officersReducer";
 import { setMessage } from "../store/infoMessagesReducer";
+import { setSingleOfficer, setSingleOfficerError } from "../store/singleOfficerReducer";
 
 const url = 'https://sf-final-project-be.herokuapp.com/api/officers/';
 
@@ -26,6 +27,23 @@ export const getAllOfficers = () => {
                     text: `${error.response.data.message}`
                 }))
             })
+    }
+}
+
+export const getOfficer = (id) => {
+    return function(dispatch) {
+        axios.get(url + id, headers)
+        .then((response) => {
+            console.log(response)
+            console.log(response.data)
+            if (response.status === 200) {
+                dispatch(setSingleOfficer(response.data.data))
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            dispatch(setSingleOfficerError(error.response.data.message))
+        })
     }
 }
 

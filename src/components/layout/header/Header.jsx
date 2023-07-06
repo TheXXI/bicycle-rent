@@ -1,5 +1,5 @@
 import css from './header.module.scss';
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Navigation } from './Nafigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { IconBurger } from '../../assets/icons/Burger';
@@ -7,6 +7,7 @@ import { IconOpenBurger } from '../../assets/icons/OpenBurger';
 import { useState } from 'react';
 import { Profile } from './Profile';
 import { removeUser } from '../../../store/userReducer';
+import { Button } from '../../shared/Button/Button';
 
 /*const isEntered () => {
     const user = useSelector(state => state.user.user)
@@ -15,8 +16,9 @@ import { removeUser } from '../../../store/userReducer';
 export const Header = () => {
     const user = useSelector(state => state.user.user)
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     
-    const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false)
+    const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
     
     return (
         <>
@@ -25,7 +27,6 @@ export const Header = () => {
 
             <Navigation />
 
-           
             <Profile /> 
 
             <div className={css.burger} onClick={() => setIsOpenMobileMenu(!isOpenMobileMenu)}>
@@ -45,8 +46,10 @@ export const Header = () => {
                             localStorage.clear();
                         }}>Выйти</button>
                 </>:
-                <Link to="/" onClick={() => setIsOpenMobileMenu(false)} className={css['lobin-button']}>Вход</Link>}
-                
+                <Button onClick={() => {
+                    navigate('/');
+                    setIsOpenMobileMenu(false);
+                }}>Войти</Button>}
             </div>}
         </>
     )
