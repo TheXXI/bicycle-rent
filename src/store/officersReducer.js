@@ -12,7 +12,8 @@ export const officerReducer = (state = defaultState, action) => {
         case "SET_LOADED":
             return {...state, isLoaded: true }
         case "REMOVE_OFFICER":
-            return state
+            const officers = state.officers;
+            return {...state, officers: officers.filter(officer => officer._id !== action.payload), isLoaded: true}
         default:
             return state
     }
@@ -21,3 +22,4 @@ export const officerReducer = (state = defaultState, action) => {
 export const setAllOfficers = (payload) => ({ type: "SET_ALL_OFFICERS", payload });
 export const setNoLoadedOfficers = () => ({ type: "SET_NO_LOADED" });
 export const setLoadedOfficers = () => ({ type: "SET_LOADED" });
+export const removeOfficer = (payload) => ({ type: "REMOVE_OFFICER", payload });

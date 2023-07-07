@@ -1,72 +1,25 @@
 const defaultState = {
-    cases: [{
-            status: "new",
-            licenseNumber: "111111",
-            type: "general",
-            ownerFullName: "Курис М.В",
-            clientId: "6d5f17ab-9b5d-44d6-bc42-aa1617498f4d",
-            createdAt: "01.01.2023",
-            updatedAt: "",
-            color: "Красный",
-            date: "01.01.2023",
-            officer: "64992f14a687ee5e66c557f3",
-            description: "",
-            resolution: ""
-        },
-        {
-            status: "new",
-            licenseNumber: "111111",
-            type: "general",
-            ownerFullName: "Курис М.В",
-            clientId: "6d5f17ab-9b5d-44d6-bc42-aa1617498f4d",
-            createdAt: "01.01.2023",
-            updatedAt: "",
-            color: "Красный",
-            date: "01.01.2023",
-            officer: "64992f14a687ee5e66c557f3",
-            description: "",
-            resolution: ""
-        },
-        {
-            status: "new",
-            licenseNumber: "234567",
-            type: "general",
-            ownerFullName: "Иванов И.И.",
-            clientId: "6d5f17ab-9b5d-44d6-bc42-aa1617498f4d",
-            createdAt: "05.05.2023",
-            updatedAt: "",
-            color: "БЕЛЫЙ",
-            date: "05.05.2023",
-            officer: "64992f14a687ee5e66c557f3",
-            description: "",
-            resolution: ""
-        },
-        {
-            status: "in_progress",
-            licenseNumber: "111111",
-            type: "general",
-            ownerFullName: "Курис М.В",
-            clientId: "6d5f17ab-9b5d-44d6-bc42-aa1617498f4d",
-            createdAt: "01.01.2023",
-            updatedAt: "",
-            color: "Красный",
-            date: "01.01.2023",
-            officer: "64992f14a687ee5e66c557f3",
-            description: "",
-            resolution: ""
-        }
-
-    ]
+    cases: [],
+    isLoaded: false
 }
 
 export const casesReducer = (state = defaultState, action) => {
     switch (action.type) {
-        case "SET_CASE":
-            let cases = state.cases
-            return {...state, cases }
+        case "SET_ALL_CASES":
+            return {...state, cases: action.payload, isLoaded: true }
+        case "SET_NO_LOADED":
+            return {...state, isLoaded: false }
+        case "SET_LOADED":
+            return {...state, isLoaded: true }
         case "REMOVE_CASE":
-            return {...state, unknownUser: false }
+            const cases = state.cases;
+            return {...state, cases: cases.filter(currentCases => currentCases._id !== action.payload), isLoaded: true}
         default:
             return state
     }
 }
+
+export const setAllCases = (payload) => ({ type: "SET_ALL_CASES", payload });
+export const setNoLoadedCases = () => ({ type: "SET_NO_LOADED" });
+export const setLoadedCases = () => ({ type: "SET_LOADED" });
+export const removeCase = (payload) => ({ type: "REMOVE_CASE", payload });

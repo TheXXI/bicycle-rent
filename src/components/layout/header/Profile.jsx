@@ -3,7 +3,6 @@ import css from './header.module.scss'
 import { IconProfile } from '../../assets/icons/Profile';
 import { removeUser } from '../../../store/userReducer';
 import { Link, useNavigate } from "react-router-dom"
-import { Button } from '../../shared/Button/Button';
 
 export const Profile = () => {
     const user = useSelector(state => state.user.user)
@@ -20,6 +19,7 @@ export const Profile = () => {
                 </span>
                 <button className={css['exit-button']} onClick={
                         () => {
+                            navigate('/');
                             dispatch(removeUser())
                             localStorage.clear();
                         }}>Выйти</button>

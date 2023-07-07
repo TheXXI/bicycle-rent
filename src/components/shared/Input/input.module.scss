@@ -1,10 +1,12 @@
+@import '../../../variables.scss';
+
 .label {
     margin-top: 25px;
 
     display: flex;
     flex-direction: column;
     font-size: 16px;
-    color: #949494;
+    color: $gray;
 
     input {
         margin-top: 15px;
@@ -23,10 +25,4 @@
         margin-left: 5px;
         margin-bottom: 10px;
     }
-}
-
-.label-row {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
 }

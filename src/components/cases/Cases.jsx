@@ -1,11 +1,14 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import css from '../table.module.scss';
 import { IconClose } from '../assets/icons/Close';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { setNoLoadedCases } from '../../store/casesReducer';
+import { getAllCases } from '../../requests/cases';
 
 export const Cases = () => {
-    const user = useSelector(state => state.user.user)
+    const user = useSelector(state => state.user.user);
+    const {isLoaded, cases } = useSelector(state => state.cases);
 
     const navigate = useNavigate() 
     useEffect(() => {
@@ -14,7 +17,16 @@ export const Cases = () => {
         }
     })
 
-    const cases = useSelector(state => state.cases.cases)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (user) {
+            dispatch(setNoLoadedCases());
+            console.log('запрос сообщений');
+            dispatch(getAllCases(user.token));
+        }
+    },[dispatch])
+
     console.log(cases)
     return(
         <div className={css.content}>

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Spinner } from "../loaderSpinner/Spinner";
-import { getOfficer } from "../../requests/officers";
+import { Spinner } from "../shared/loaderSpinner/Spinner";
+import { getOfficer, updateOfficer } from "../../requests/officers";
 import { Button } from "../shared/Button/Button";
 import { Input } from "../shared/Input/Input";
 
@@ -21,10 +21,10 @@ export const SingleOfficer = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-       dispatch(getOfficer(id));
+       dispatch(getOfficer(user.token, id));
        console.log('getOfficer');
        console.log(officer);
-    },[])
+    },[dispatch])
 
     const [isEdit, setIsEdit] = useState(false);
 
@@ -43,7 +43,9 @@ export const SingleOfficer = () => {
     }, [officer])
 
     const handleClick = () => {
-        console.log(firstname, lastname, approved)
+        console.log(firstname, lastname, approved);
+        setIsEdit(false);
+        dispatch(updateOfficer(user.token, officer._id, firstname, lastname, approved))
     }
 
     return(
@@ -71,12 +73,14 @@ export const SingleOfficer = () => {
 
                 <p>Одобрен: {officer.approved ? "Да" : "Нет"}</p>
 
-                {isEdit && 
+                {isEdit &&
                 <Input 
                     label={"Одобрен"}
                     type={"checkbox"}
-                    defaultСhecked={true} 
-                    onChange={() => setApproved(!approved) }/>
+                    disabled={officer._id === user.id}
+                    checked={approved} 
+                    onChange={() => setApproved(!approved) }
+                    />
                 }
 
                 {user.approved && 
@@ -88,8 +92,7 @@ export const SingleOfficer = () => {
                 {isEdit &&<Button onClick={() => setIsEdit(false)}>Отмена</Button>}
             </div> :
             <Spinner />
-        }
-        <input type="checkbox" name="" id="" checked={approved}/>
+            }
         </>
     )
 }

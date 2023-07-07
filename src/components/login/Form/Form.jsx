@@ -3,6 +3,8 @@ import {signIn, signUp} from '../../../requests/auth'
 import css from './form.module.scss'
 import { useEffect, useState } from 'react';
 import { removeEmailError, removeInvalidPass } from '../../../store/infoMessagesReducer';
+import { Input } from '../../shared/Input/Input';
+import { Button } from '../../shared/Button/Button';
 
 export const From = () => {
     useEffect( () => console.log('rerender Form'))
@@ -41,66 +43,70 @@ export const From = () => {
 
     return (
         <div className={css.form}>
-            <label><span>E-mail<span className="required">*</span>:</span>
-                <input type="email" value={email} onChange={e => {
+            <Input
+                label={"E-mail"}
+                required={true}
+                value={email}
+                onChange={e => {
                     setEmail(e.target.value)
                     setEmailIsEmpty(false)
                     if (emailError) dispatch(removeEmailError())
-                    }}/>
-            </label>
+            }}/>
             <span className="error">
                 {emailError ? emailError : ""}
                 {emailIsEmpty ? "Обязательное поле" : ""}
-                </span>
-            <label><span>Пароль<span className="required">*</span>:</span>
-                <input type="password" value={password} onChange={e => {
-                        setPassword(e.target.value)
-                        setPasswordIsEmpty(false)
-                        if (invalidPass) dispatch(removeInvalidPass())
-                    }}/>
-            </label>
+            </span>
+
+            <Input
+                label={"Пароль"}
+                required={true}
+                type={"password"}
+                value={password}
+                onChange={e => {
+                    setPassword(e.target.value)
+                    setPasswordIsEmpty(false)
+                    if (invalidPass) dispatch(removeInvalidPass())
+            }}/>
             <span className="error">
                 {invalidPass ? "Неверный пароль" : ""}
                 {passwordIsEmpty ? "Обязательное поле" : ""}
-                </span>
+            </span>
+
             {isRegistrationForm &&
             <>
-                <label className={css.label}><span>Повторите пароль<span className="required">*</span>:</span>
-                    <input type="password" value={repeatPassword} 
+                <Input
+                    label={"Повторите ароль"}
+                    required={true}
+                    type={"password"}
+                    value={repeatPassword} 
                     onChange={e => {
                         setRepeatPassword(e.target.value)
                         setRepeatPasswordIsEmpty(false)
                         e.target.value !== '' && e.target.value !== password ? setRepeatIncorrectPassword(true) : setRepeatIncorrectPassword(false)
                     }}
-                    />
-                        <span className="error">
-                            {incorrectRepeatPassword ? "Неверный пароль" : ""}
-                            {repeatPasswordIsEmpty ? "Обязательное поле" : ""}
-                            </span>
-                </label>
-                <label>Имя:
-                    <input type="text" value={firstname} onChange={e => setFirstname(e.target.value)}/>
-                </label>
-                <label>Фамилия:
-                    <input type="text" value={lastname} onChange={e => setLastname(e.target.value)}/>
-                </label>
+                />
+                <span className="error">
+                    {incorrectRepeatPassword ? "Пароли не совпадают" : ""}
+                    {repeatPasswordIsEmpty ? "Обязательное поле" : ""}
+                </span>
+
+                <Input 
+                    label={"Имя"}
+                    type="text"
+                    value={firstname}
+                    onChange={e => setFirstname(e.target.value)}
+                />
+                <Input
+                    label={"Фамилия"}
+                    type="text"
+                    value={lastname}
+                    onChange={e => setLastname(e.target.value)}
+                />
+
             </>
             }
 
-            <input type="submit"
-            value={
-                isRegistrationForm ? "Зарегистрироваться" : "Войти"
-            }
-            onClick={() => handleClick()}
-            /*onClick={
-                !isRegistrationForm ?
-                    () => signIn(email.toLowerCase(), password) : /*() => {
-                        console.log(email.toLowerCase(), password, firstname, lastname)
-                        signUp(email.toLowerCase(), password, firstname, lastname)*/
-                        /*null*/
-                    /*}
-            }*/
-            className={css.submit}/>
+            <Button onClick={() => handleClick()}>{isRegistrationForm ? "Зарегистрироваться" : "Войти"}</Button>
             <button className={css['change-auth-from']} 
                 onClick={() => {
                     // setIncorrectEmail(false)

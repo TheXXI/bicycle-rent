@@ -1,13 +1,37 @@
 import axios from "axios";
 import { store } from "../store/index";
 import { setMessage } from "../store/infoMessagesReducer";
+import { setAllCases } from "../store/casesReducer";
 
 const clientId = '6d5f17ab-9b5d-44d6-bc42-aa1617498f4d';
 const url = 'https://sf-final-project-be.herokuapp.com/api/';
 
+export const getAllCases = (token) => {
+    return function(dispatch) {
+        axios.get(url + "cases/", {headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json"
+        }})
+            .then((response) => {
+                if (response.status === 200) {
+                    dispatch(setAllCases(response.data.data))
+                }
+            })
+            .catch((error) => {
+                console.log("error: ", error)
+                dispatch(setMessage({
+                    success: false,
+                    text: `${error.response.data.message}`
+                }))
+            })
+    }
+}
+
 export const createCase = (licenseNumber, ownerFullName, type, color, date, officer, description) => {
     return function(dispatch) {
         const user = store.getState().user.user;
+
+        console.log(user)
 
         let body = {
             licenseNumber,
@@ -29,7 +53,7 @@ export const createCase = (licenseNumber, ownerFullName, type, color, date, offi
 
         if (user) {
             currentUrl += 'cases/'
-            headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+            headers.Authorization = `Bearer ${user.token}`
         } else {
             body.clientId = clientId
             currentUrl += 'public/report'

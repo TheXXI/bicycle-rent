@@ -3,40 +3,37 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { IconClose } from "../assets/icons/Close";
-import { deleteOfficerr, getAllOfficers } from "../../requests/officers";
-import { Spinner } from "../loaderSpinner/Spinner";
+import { deleteOfficer, getAllOfficers } from "../../requests/officers";
+import { Spinner } from "../shared/loaderSpinner/Spinner";
 import { setNoLoadedOfficers } from "../../store/officersReducer";
 
 
 export const Officers = () => {
-    useEffect( () => {console.log('rerender Officers')})
+    useEffect( () => {console.log('rerender Officers')});
+    const {isLoaded, officers } = useSelector(state => state.officers);
     
-    const user = useSelector(state => state.user.user)
-    const navigate = useNavigate()
+    const user = useSelector(state => state.user.user);
+    const navigate = useNavigate();
     useEffect(() => {
         if (!user) navigate('/');
     })
 
-    const dispatch = useDispatch()
-
-    
-
-    useEffect(() => {
-        console.log('dispatch')
-      }, [dispatch]);
-
+    const dispatch = useDispatch();
     
     useEffect(() => {
-        dispatch(setNoLoadedOfficers())
-        console.log('запрос сотрудников')
-        dispatch(getAllOfficers())
-    },[])
+        if (user) {
+            dispatch(setNoLoadedOfficers());
+            console.log('запрос сотрудников');
+            dispatch(getAllOfficers(user.token));
+        }
+    },[dispatch])
 
-    const deleteOfficer = (id) => {
-        dispatch( deleteOfficerr(id));
+
+    const deleteHandle = (id, email) => {
+        dispatch(setNoLoadedOfficers());
+        dispatch( deleteOfficer(user.token, id, email));
      }
 
-    const {isLoaded, officers } = useSelector(state => state.officers)
     console.log(officers)
 
     return(
@@ -52,7 +49,7 @@ export const Officers = () => {
                             <td>Имя сотрудника</td>
                             <td>Фамилия сотрудника</td>
                             <td>Статус сотрудника</td>
-                            <td></td>
+                            {user.approved && <td></td>}
                         </tr>
                     </thead>
                     <tbody>
@@ -62,11 +59,13 @@ export const Officers = () => {
                                 <td>{officer.firstName}</td>
                                 <td>{officer.lastName}</td>
                                 <td>{officer.approved ? "Одобрен" : "Не одобрен"}</td>
-                                <td onClick={(e) => {
+                                {officer._id === user.id || !user.approved ? <td></td> :
+                                <td onClick={
+                                    (e) => {
                                     e.stopPropagation();
-                                    deleteOfficer(officer._id);
+                                    deleteHandle(officer._id, officer.email);
                                     }}><IconClose/>
-                                </td>
+                                </td>}
                             </tr>
                         ))}
                     </tbody>

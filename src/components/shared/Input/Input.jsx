@@ -14,7 +14,13 @@ export const Input = (props) => {
                 <span>{props.label}<span className="required">*</span>:</span>:
                 props.label + ":"
             }
-            <input type={props.type ? props.type : "text"} value={props.value} onChange={props.onChange}/>
+            <input 
+                type={props.type ? props.type : "text"}
+                value={props.value}
+                onChange={props.onChange}
+                checked={props.checked}
+                disabled={props.disabled}
+            />
         </label>
     )
 }

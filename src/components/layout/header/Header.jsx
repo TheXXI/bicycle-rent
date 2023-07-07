@@ -42,6 +42,7 @@ export const Header = () => {
                         { user.info.firstname && user.info.lastname ? user.info.firstname + " " + user.info.lastname[0] + "." : user.info.email }
                     </span> | <button className={css['exit-button']} onClick={
                         () => {
+                            navigate('/');
                             dispatch(removeUser());
                             localStorage.clear();
                             setIsOpenMobileMenu(false);

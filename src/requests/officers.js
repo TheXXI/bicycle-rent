@@ -1,20 +1,16 @@
 import axios from "axios";
-import { setAllOfficers } from "../store/officersReducer";
+import { removeOfficer, setAllOfficers } from "../store/officersReducer";
 import { setMessage } from "../store/infoMessagesReducer";
 import { setSingleOfficer, setSingleOfficerError } from "../store/singleOfficerReducer";
 
 const url = 'https://sf-final-project-be.herokuapp.com/api/officers/';
 
-const headers = {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'application/json'
-    },
-};
-
-export const getAllOfficers = () => {
+export const getAllOfficers = (token) => {
     return function(dispatch) {
-        axios.get(url, headers)
+        axios.get(url, {headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json"
+        }})
             .then((response) => {
                 if (response.status === 200) {
                     dispatch(setAllOfficers(response.data.officers))
@@ -30,9 +26,12 @@ export const getAllOfficers = () => {
     }
 }
 
-export const getOfficer = (id) => {
+export const getOfficer = (token, id) => {
     return function(dispatch) {
-        axios.get(url + id, headers)
+        axios.get(url + id, {headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json"
+        }})
         .then((response) => {
             console.log(response)
             console.log(response.data)
@@ -47,23 +46,56 @@ export const getOfficer = (id) => {
     }
 }
 
-export const deleteOfficerr = (id) => {
+export const updateOfficer = (token, id, firstname, lastname, approved) => {
     return function(dispatch) {
-        axios.delete(url + id, headers)
+        axios.put(url + id, {firstName: firstname, lastName: lastname, approved: approved}, {headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json"
+        }})
+        .then((response) =>  {
+            console.log(response)
+            console.log(response.data)
+            if (response.status === 200) {
+                dispatch(setSingleOfficer(response.data.data))
+                dispatch(setMessage({
+                    success: true,
+                    text: "Пользователь успешно изменен."
+                }));
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            dispatch(setMessage({
+                success: false,
+                text: `${error.response.data.message}`
+            }));
+        })
+    }
+
+}
+
+export const deleteOfficer = (token, id, email) => {
+    return function(dispatch) {
+        axios.delete(url + id, {headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json"
+        }})
             .then((response) => {
                 if (response.status === 200) {
                     dispatch(setMessage({
                         success: true,
-                        text: `Сотрудник успешно удален`
-                    }))
+                        text: `Сотрудник ${email} успешно удален`
+                    }));
+                    dispatch(removeOfficer(id));
                 }
             })
             .catch((error) => {
                 console.log("error: ", error)
+                console.log("error id: ", id)
                 dispatch(setMessage({
                     success: false,
                     text: `${error.response.data.message}`
-                }))
+                }));
             })
     }
 }

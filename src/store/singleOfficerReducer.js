@@ -8,10 +8,6 @@ export const singleOfficerReducer = (state = defaultState, action) => {
     switch (action.type) {
         case "SET_SINGLE_OFFICER":
             return {...state, officer: action.payload, isLoaded: true }
-        /*case "SET_NO_LOADED":
-            return {...state, isLoaded: false }
-        case "SET_LOADED":
-            return {...state, isLoaded: true }*/
         case "SET_OFFICER_ERROR":
             return {...state, isLoaded: true, error: action.payload, isLoaded: true}
         default:

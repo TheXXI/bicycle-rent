@@ -4,7 +4,7 @@ import css from './createCase.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../shared/Button/Button';
 import { Input } from '../shared/Input/Input';
-import { Spinner } from '../loaderSpinner/Spinner';
+import { Spinner } from '../shared/loaderSpinner/Spinner';
 import { getAllOfficers } from '../../requests/officers';
 import { setNoLoadedOfficers } from '../../store/officersReducer';
 
@@ -35,45 +35,54 @@ export const CreateCase = () => {
         if (ownerFullName.trim() === '') setOwnerFullNameIsEmpty(true);
         if (type === '') setTypeIsEmpty(true);
 
-        if (licenseNumber.trim() !== '' && ownerFullName.trim() !== '' && type !== '') {
-            dispatch(createCase(licenseNumber, ownerFullName, type, color, date, officer, description));
-        }
+        // if (licenseNumber.trim() !== '' && ownerFullName.trim() !== '' && type !== '') {
+        //     createCase(licenseNumber, ownerFullName, type, color, date, officer, description);
+        // }
+
+        console.log(licenseNumber, ownerFullName, type, color, date, officer, description);
     }
 
     useEffect(() => {
-        dispatch(setNoLoadedOfficers());
-        console.log('запрос сотрудников');
-        dispatch(getAllOfficers());
+        if (user) {
+            dispatch(setNoLoadedOfficers());
+            console.log('запрос сотрудников');
+            dispatch(getAllOfficers(user.token));
+        }
     },[])
 
     const {isLoaded, officers } = useSelector(state => state.officers);
     console.log(officers)
 
     const getApprovedOfficers = () => {
-        return officers.filter(item => item.approved === true);
+        return officers.filter(officer => officer.approved === true);
     }
 
     return (
         <>
-        {isLoaded ?
+        {!user || isLoaded ?
             <div className={css.content}>
 
                 <h2>Сообщить о краже</h2>
-                
-                <label><span>Номер лицензии<span className="required">*</span>:</span>
-                    <input type="number" value={licenseNumber} onChange={(e) => {
+
+                <Input
+                    label="Номер лицензии"
+                    type="number"
+                    value={licenseNumber} 
+                    onChange={(e) => {
                         setLicenseNumber(e.target.value)
                         if (licenseNumberIsEmpty) setLicenseNumberIsEmpty(false)
-                    }}/>
-                </label>
+                    }}
+                />
                 <span className="error">{licenseNumberIsEmpty && "Обязательное поле"}</span>
 
-                <label><span>ФИО клиента<span className="required">*</span>:</span>
-                    <input type="text" value={ownerFullName} onChange={(e) => {
+                <Input
+                    label="ФИО клиента"
+                    value={ownerFullName} 
+                    onChange={(e) => {
                         setOwnerFullName(e.target.value)
                         if (ownerFullNameIsEmpty) setOwnerFullNameIsEmpty(false)
-                    }}/>
-                </label>
+                    }}
+                />
                 <span className="error">{ownerFullNameIsEmpty && "Обязательное поле"}</span>
 
                 <label><span>Тип велосипеда<span className="required">*</span>:</span>
@@ -88,21 +97,18 @@ export const CreateCase = () => {
                 </label>
                 <span className="error">{typeIsEmpty && "Обязательное поле"}</span>
 
-                {/* <label>Цвет велосипеда:
-                    <input type="text" value={color} onChange={(e) => {
-                        setColor(e.target.value)
-                    }}/>
-                </label> */}
-
-                <Input type={"text"} value={color} onChange={(e) => {
-                        setColor(e.target.value)
-                }}>Цвет велосипеда:</Input>
+                <Input
+                    label={"Цвет велосипеда"}
+                    value={color} 
+                    onChange={(e) => { setColor(e.target.value) }}
+                />
                 
-                <label className={css.date}>Дата кражи:
-                    <input type="date" value={date} onChange={(e) => {
-                        setDate(e.target.value)
-                    }}/>
-                </label>
+                <Input
+                    label="Дата кражи"
+                    type="date"
+                    value={date} 
+                    onChange={(e) => { setDate(e.target.value) }}
+                />
 
                 {user &&
                 <label>Ответственный сотрудник:
