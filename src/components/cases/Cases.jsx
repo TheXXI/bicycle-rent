@@ -4,11 +4,16 @@ import { IconClose } from '../assets/icons/Close';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { setNoLoadedCases } from '../../store/casesReducer';
-import { getAllCases } from '../../requests/cases';
+import { deleteCase, getAllCases } from '../../requests/cases';
+import { Spinner } from '../shared/loaderSpinner/Spinner';
+import { setNoLoadedOfficers } from '../../store/officersReducer';
+import { getAllOfficers } from '../../requests/officers';
+import { dateFormater, getOfficerByEmail, getOfficerEmail, getStatus } from '../../utils/functions';
 
 export const Cases = () => {
     const user = useSelector(state => state.user.user);
-    const {isLoaded, cases } = useSelector(state => state.cases);
+    const cases = useSelector(state => state.cases);
+    const officers  = useSelector(state => state.officers);
 
     const navigate = useNavigate() 
     useEffect(() => {
@@ -24,49 +29,62 @@ export const Cases = () => {
             dispatch(setNoLoadedCases());
             console.log('запрос сообщений');
             dispatch(getAllCases(user.token));
+
+            dispatch(setNoLoadedOfficers());
+            console.log('запрос сотрудников');
+            dispatch(getAllOfficers(user.token));
         }
     },[dispatch])
 
-    console.log(cases)
+    const deleteHandle = (id) => {
+        dispatch(deleteCase(user.token, id));
+    }
+
+    console.log(cases.cases)
     return(
-        <div className={css.content}>
-             <h2>Сообщения о кражах</h2>
-             <div className={css['table-wrapper']}>
-             <table className={css.table}>
-                <thead>
-                    <tr>
-                        <td>Статус</td>
-                        <td>Номер лицензии</td>
-                        <td>Тип велосипеда</td>
-                        <td>ФИО арендатора</td>
-                        <td>Цвет</td>
-                        <td>Дата кражи</td>
-                        <td>Дата сообщения</td>
-                        <td>Сотрудник</td>
-                        <td></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {cases.map((currentCase, index ) => (
-                        <tr key={index} onClick={() => console.log('open')}>
-                            <td>{currentCase.status}</td>
-                            <td>{currentCase.licenseNumber}</td>
-                            <td>{currentCase.type}</td>
-                            <td>{currentCase.ownerFullName}</td>
-                            <td>{currentCase.color}</td>
-                            <td>{currentCase.date}</td>
-                            <td>{currentCase.createdAt}</td>
+        <>
+        {cases.isLoaded && officers.isLoaded ?
+            <div className={css.content}>
+                <h2>Сообщения о кражах</h2>
+                {cases.cases.length === 0 ? <center>Список сообщений о кражах пуст</center> :
+                <div className={css['table-wrapper']}>
+                <table className={css.table}>
+                    <thead>
+                        <tr>
+                            <td>Статус</td>
+                            <td>Номер лицензии</td>
+                            <td>Тип велосипеда</td>
+                            <td>ФИО арендатора</td>
+                            <td>Цвет</td>
+                            <td>Дата кражи</td>
                             <td>Сотрудник</td>
-                            <td onClick={(e) => {
-                                e.stopPropagation()
-                                console.log('close')
-                                }}><IconClose/>
-                            </td>
+                            {user.approved && <td></td>}
                         </tr>
-                    ))}
-                </tbody>
-             </table>
-             </div>
-        </div>
+                    </thead>
+                    <tbody>
+                        {cases.cases.map((currentCase, index ) => (
+                            <tr key={index} onClick={() => navigate(currentCase._id)}>
+                                <td>{getStatus(currentCase.status)}</td>
+                                <td>{currentCase.licenseNumber}</td>
+                                <td>{currentCase.type}</td>
+                                <td>{currentCase.ownerFullName}</td>
+                                <td>{currentCase.color}</td>
+                                <td>{dateFormater(currentCase.date)}</td>
+                                <td>{getOfficerByEmail(currentCase.officer, officers.officers)}</td>
+                                {!user.approved ? <td></td> :
+                                <td onClick={e => {
+                                    e.stopPropagation();
+                                    deleteHandle(currentCase._id);
+                                    }}><IconClose/>
+                                </td>}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                </div> }
+            </div> :
+            <Spinner />
+        }
+        </>
     )
 }

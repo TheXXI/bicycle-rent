@@ -15,6 +15,7 @@
             }
             tbody {
                 font-size: 18px;
+                white-space: nowrap;
                 tr:nth-child(odd) {
                     background-color: rgb(219, 219, 219);
                 }

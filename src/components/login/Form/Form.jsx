@@ -3,7 +3,7 @@ import {signIn, signUp} from '../../../requests/auth'
 import css from './form.module.scss'
 import { useEffect, useState } from 'react';
 import { removeEmailError, removeInvalidPass } from '../../../store/infoMessagesReducer';
-import { Input } from '../../shared/Input/Input';
+import { Input } from '../../shared/FormElements/Input';
 import { Button } from '../../shared/Button/Button';
 
 export const From = () => {

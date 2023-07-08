@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Spinner } from "../shared/loaderSpinner/Spinner";
 import { getOfficer, updateOfficer } from "../../requests/officers";
 import { Button } from "../shared/Button/Button";
-import { Input } from "../shared/Input/Input";
+import { Input } from "../shared/FormElements/Input";
 
 export const SingleOfficer = () => {
     useEffect( () => {console.log('rerender SingleOfficer')});
@@ -51,7 +51,7 @@ export const SingleOfficer = () => {
     return(
         <>
         {isLoaded ? 
-            <div className="">
+            <>
                 <h2>Детальнаая страница сотрудника</h2> 
 
                 <p>Email: {officer.email}</p>
@@ -60,7 +60,7 @@ export const SingleOfficer = () => {
                 <Input 
                     label={"Имя"}
                     value={firstname}
-                    onChange={(e) => setFirstname(e.target.value) }/>
+                    onChange={e => setFirstname(e.target.value) }/>
                 }
 
                 <p>Фамилия: {officer.lastName === null ? "Не указано" : officer.lastName}</p>
@@ -68,7 +68,7 @@ export const SingleOfficer = () => {
                 <Input 
                     label={"Фамилия"}
                     value={lastname} 
-                    onChange={(e) => setLastname(e.target.value) }/>
+                    onChange={e => setLastname(e.target.value) }/>
                 }
 
                 <p>Одобрен: {officer.approved ? "Да" : "Нет"}</p>
@@ -90,7 +90,7 @@ export const SingleOfficer = () => {
                 }
                 &nbsp;
                 {isEdit &&<Button onClick={() => setIsEdit(false)}>Отмена</Button>}
-            </div> :
+            </> :
             <Spinner />
             }
         </>

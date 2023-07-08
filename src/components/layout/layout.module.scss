@@ -2,19 +2,22 @@
 .wrapper {
     max-width: $wrapper-width;
     margin: 0 auto;
-
     display: flex;
-	flex-direction: column;
-	min-height: 100vh;
-
+    flex-direction: column;
+    min-height: 100vh;
     main {
         flex-grow: 1;
     }
-
     footer {
         flex-shrink: 0;
         display: flex;
         justify-content: end;
         height: 40px;
+        margin-top: 20px;
+    }
+    @media screen and (max-width: 1220px) {
+        footer {
+            padding-right: 20px;
+        }
     }
 }

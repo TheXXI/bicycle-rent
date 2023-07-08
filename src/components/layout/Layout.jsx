@@ -24,7 +24,7 @@ export const Layout = () => {
                 <MessageBlock/>
                 <Outlet />
             </main>
-            <footer>&copy; 2023</footer>
+            <footer>Сервис проката велосипедов &copy; 2023</footer>
         </div>
     )
 }

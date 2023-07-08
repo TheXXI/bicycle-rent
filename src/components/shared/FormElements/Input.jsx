@@ -1,4 +1,4 @@
-import css from "./input.module.scss";
+import css from "./formElements.module.scss";
 
 export const Input = (props) => {
     const isCheckbox = props.type === "checkbox" ? 
@@ -17,6 +17,7 @@ export const Input = (props) => {
             <input 
                 type={props.type ? props.type : "text"}
                 value={props.value}
+                valueAsDate={props.valueAsDate}
                 onChange={props.onChange}
                 checked={props.checked}
                 disabled={props.disabled}

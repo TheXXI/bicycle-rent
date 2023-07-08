@@ -6,6 +6,7 @@ import { infoMessagesReducer } from './infoMessagesReducer';
 import { casesReducer } from './casesReducer';
 import { officerReducer } from './officersReducer';
 import { singleOfficerReducer } from './singleOfficerReducer';
+import { singleCaseReducer } from './singleCaseReducer';
 
 const rootReduser = combineReducers({
     user: userReducer,
@@ -13,6 +14,7 @@ const rootReduser = combineReducers({
     officers: officerReducer,
     singleOfficer: singleOfficerReducer,
     cases: casesReducer,
+    singleCase: singleCaseReducer
 })
 
 export const store = createStore(rootReduser, composeWithDevTools(applyMiddleware(thunk)));

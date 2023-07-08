@@ -1,17 +1,20 @@
 import axios from "axios";
 import { store } from "../store/index";
 import { setMessage } from "../store/infoMessagesReducer";
-import { setAllCases } from "../store/casesReducer";
+import { removeCase, setAllCases } from "../store/casesReducer";
+import { setSingleCase, setSingleCaseError } from "../store/singleCaseReducer";
 
 const clientId = '6d5f17ab-9b5d-44d6-bc42-aa1617498f4d';
 const url = 'https://sf-final-project-be.herokuapp.com/api/';
 
 export const getAllCases = (token) => {
     return function(dispatch) {
-        axios.get(url + "cases/", {headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-type": "application/json"
-        }})
+        axios.get(url + "cases/", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-type": "application/json"
+                }
+            })
             .then((response) => {
                 if (response.status === 200) {
                     dispatch(setAllCases(response.data.data))
@@ -27,7 +30,29 @@ export const getAllCases = (token) => {
     }
 }
 
-export const createCase = (licenseNumber, ownerFullName, type, color, date, officer, description) => {
+export const getCase = (token, id) => {
+    return function(dispatch) {
+        axios.get(url + 'cases/' + id, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-type": "application/json"
+                }
+            })
+            .then((response) => {
+                console.log(response)
+                console.log(response.data)
+                if (response.status === 200) {
+                    dispatch(setSingleCase(response.data.data))
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+                dispatch(setSingleCaseError(error.response.data.message))
+            })
+    }
+}
+
+export const createCase = (token, licenseNumber, ownerFullName, type, color, date, officer, description) => {
     return function(dispatch) {
         const user = store.getState().user.user;
 
@@ -53,13 +78,11 @@ export const createCase = (licenseNumber, ownerFullName, type, color, date, offi
 
         if (user) {
             currentUrl += 'cases/'
-            headers.Authorization = `Bearer ${user.token}`
+            headers.Authorization = `Bearer ${token}`
         } else {
             body.clientId = clientId
             currentUrl += 'public/report'
         }
-
-        //console.log(currentUrl, body, headers)
 
         axios.post(currentUrl, body, { headers })
             .then((response) => {
@@ -80,6 +103,74 @@ export const createCase = (licenseNumber, ownerFullName, type, color, date, offi
                     success: false,
                     text: `${error.response.data.message}`
                 }))
+            })
+    }
+}
+
+export const updateCase = (token, id, status, licenseNumber, type, ownerFullName, color, date, officer, description, resolution) => {
+    return function(dispatch) {
+        const body = {
+            status: status,
+            licenseNumber: licenseNumber,
+            // type: type,
+            // ownerFullName: ownerFullName,
+            color: color,
+            date: date,
+            officer: officer,
+            description: description,
+            resolution: resolution,
+            updatedAt: (new Date).toISOString().split('T')[0]
+        }
+        axios.put(url + 'cases/' + id, body, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-type": "application/json"
+                }
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    dispatch(setSingleCase(body))
+                    dispatch(setMessage({
+                        success: true,
+                        text: `Сообщение успешно изменено`
+                    }));
+                }
+            })
+            .catch((error) => {
+                console.log("error: ", error)
+                console.log("error id: ", id)
+                dispatch(setMessage({
+                    success: false,
+                    text: `${error.response.data.message}`
+                }));
+            })
+    }
+}
+
+export const deleteCase = (token, id) => {
+    return function(dispatch) {
+        axios.delete(url + 'cases/' + id, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-type": "application/json"
+                }
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    dispatch(setMessage({
+                        success: true,
+                        text: `Сообщение успешно удалено`
+                    }));
+                    dispatch(removeCase(id));
+                }
+            })
+            .catch((error) => {
+                console.log("error: ", error)
+                console.log("error id: ", id)
+                dispatch(setMessage({
+                    success: false,
+                    text: `${error.response.data.message}`
+                }));
             })
     }
 }

@@ -28,11 +28,10 @@ export const Officers = () => {
         }
     },[dispatch])
 
-
     const deleteHandle = (id, email) => {
         dispatch(setNoLoadedOfficers());
-        dispatch( deleteOfficer(user.token, id, email));
-     }
+        dispatch(deleteOfficer(user.token, id, email));
+    }
 
     console.log(officers)
 
@@ -61,7 +60,7 @@ export const Officers = () => {
                                 <td>{officer.approved ? "Одобрен" : "Не одобрен"}</td>
                                 {officer._id === user.id || !user.approved ? <td></td> :
                                 <td onClick={
-                                    (e) => {
+                                    e => {
                                     e.stopPropagation();
                                     deleteHandle(officer._id, officer.email);
                                     }}><IconClose/>
