@@ -107,20 +107,21 @@ export const createCase = (token, licenseNumber, ownerFullName, type, color, dat
     }
 }
 
-export const updateCase = (token, id, status, licenseNumber, type, ownerFullName, color, date, officer, description, resolution) => {
+export const updateCase = (token, id, status, licenseNumber, type, ownerFullName, date, color, officer, description, resolution) => {
     return function(dispatch) {
         const body = {
             status: status,
             licenseNumber: licenseNumber,
-            // type: type,
-            // ownerFullName: ownerFullName,
+            ownerFullName: ownerFullName,
+            type: type,
             color: color,
             date: date,
             officer: officer,
             description: description,
-            resolution: resolution,
-            updatedAt: (new Date).toISOString().split('T')[0]
+            resolution: resolution
         }
+        console.log(url + 'cases/' + id)
+        console.log(body)
         axios.put(url + 'cases/' + id, body, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -128,6 +129,7 @@ export const updateCase = (token, id, status, licenseNumber, type, ownerFullName
                 }
             })
             .then((response) => {
+                console.log(response)
                 if (response.status === 200) {
                     dispatch(setSingleCase(body))
                     dispatch(setMessage({

@@ -8,7 +8,7 @@ import { deleteCase, getAllCases } from '../../requests/cases';
 import { Spinner } from '../shared/loaderSpinner/Spinner';
 import { setNoLoadedOfficers } from '../../store/officersReducer';
 import { getAllOfficers } from '../../requests/officers';
-import { dateFormater, getOfficerByEmail, getOfficerEmail, getStatus } from '../../utils/functions';
+import { dateFormater, getOfficerByEmail, getStatus, getType } from '../../utils/functions';
 
 export const Cases = () => {
     const user = useSelector(state => state.user.user);
@@ -34,7 +34,7 @@ export const Cases = () => {
             console.log('запрос сотрудников');
             dispatch(getAllOfficers(user.token));
         }
-    },[dispatch])
+    },[dispatch, user])
 
     const deleteHandle = (id) => {
         dispatch(deleteCase(user.token, id));
@@ -66,7 +66,7 @@ export const Cases = () => {
                             <tr key={index} onClick={() => navigate(currentCase._id)}>
                                 <td>{getStatus(currentCase.status)}</td>
                                 <td>{currentCase.licenseNumber}</td>
-                                <td>{currentCase.type}</td>
+                                <td>{getType(currentCase.type)}</td>
                                 <td>{currentCase.ownerFullName}</td>
                                 <td>{currentCase.color}</td>
                                 <td>{dateFormater(currentCase.date)}</td>

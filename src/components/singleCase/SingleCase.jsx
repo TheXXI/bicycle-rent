@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Spinner } from "../shared/loaderSpinner/Spinner";
 import { getCase, updateCase } from "../../requests/cases";
-import { dateFormater, getApprovedOfficers, getOfficerByEmail, getStatus } from "../../utils/functions";
+import { dateFormater, getApprovedOfficers, getOfficerByEmail, getStatus, getType } from "../../utils/functions";
 import { setNoLoadedOfficers } from "../../store/officersReducer";
 import { getAllOfficers } from "../../requests/officers";
 import { Button } from "../shared/Button/Button";
@@ -12,7 +12,7 @@ import { Input } from "../shared/FormElements/Input";
 import { Textarea } from "../shared/FormElements/Textarea";
 
 export const SingleCase = () => {
-    useEffect( () => {console.log('rerender SingleCase')});
+    //useEffect( () => {console.log('rerender SingleCase')});
     const {isLoaded, currentCase} = useSelector(state => state.singleCase);
     const officers  = useSelector(state => state.officers);
 
@@ -40,6 +40,7 @@ export const SingleCase = () => {
     const [licenseNumber, setLicenseNumber] = useState('');
     const [ownerFullName, setOwnerFullName] = useState('');
     const [type, setType] = useState('');
+    const [typeIsEmpty, setTypeIsEmpty] = useState(false);
     const [color, setColor] = useState('');
     const [date, setDate] = useState('');
     const [officer, setOfficer] = useState('');
@@ -60,21 +61,13 @@ export const SingleCase = () => {
         }
     }, [currentCase])
 
-    console.log(officers.officers);
-
     const handleClick = () => {
-        setIsEdit(false);
-        if (status == "done") setResolution(null);
-
-        console.log('type: ', type);
-        console.log('ownerFullName: ', ownerFullName);
-
-        dispatch(updateCase(user.token, id, status, licenseNumber, ownerFullName, date, type, color, officer, description, resolution));
+        !typeIsEmpty && dispatch(updateCase(user.token, id, status, licenseNumber, type, ownerFullName, date, color, officer, description, resolution));
     }
 
     return (
         <>
-            {isLoaded && officers.isLoaded? 
+            {isLoaded && officers.isLoaded?
             <>
                 <h2>Детальная страница сообщения о краже</h2>
 
@@ -107,16 +100,23 @@ export const SingleCase = () => {
                     onChange={e => setOwnerFullName(e.target.value)}
                 />}
 
-                <p>Тип велосипеда: {currentCase.type}</p>
+                <p>Тип велосипеда: {getType(currentCase.type)}</p>
                 {isEdit && <Select
                     label="Тип велосипеда"
                     value={type}
-                    onChange={e => setType(e.target.value)}
+                    onChange={e => {
+                        setType(e.target.value);
+                        e.target.value !== "" && typeIsEmpty && setTypeIsEmpty(false);
+                        e.target.value === "" && setTypeIsEmpty(true);
+                    }}
                 >
                     <option value="">Выберите тип</option>
                     <option key="1" value="general">Обычный</option>
                     <option key="2" value="sport">Спорт</option>
                 </Select>}
+                <span className="error">
+                {typeIsEmpty ? "Обязательное поле" : ""}
+                </span>
 
                 {currentCase.color && <p>Цвет велосипеда: {currentCase.color}</p> }
                 {isEdit && <Input
@@ -127,7 +127,7 @@ export const SingleCase = () => {
                 {currentCase.date && <p>Дата кражи: {dateFormater(currentCase.date)}</p> }
                 {isEdit && <Input
                     label="Дата кражи"
-                    value={String(date).slice(0, -14)}
+                    value={date}
                     type="date"
                     onChange={e => setDate(e.target.value)}
                 />}
@@ -136,7 +136,7 @@ export const SingleCase = () => {
                     label="Ответственный сотрудник"
                     value={officer}
                     onChange={e => {
-                        setOfficer(e.target.value);
+                        setOfficer(e.target.value !== "" ? e.target.value : null);
                 }}>
                     <option value="">Выберите сотрудника</option>
                     {getApprovedOfficers(officers.officers).map((officer, index) => (
@@ -152,7 +152,7 @@ export const SingleCase = () => {
                         setDescription(e.target.value)
                 }}/>}
 
-                {currentCase.resolution && <p>Завершающий комментарий: {currentCase.resolution}</p>}
+                {currentCase.resolution && status == "done" && <p>Завершающий комментарий: {currentCase.resolution}</p>}
                 {isEdit && status == "done" && <Textarea
                     label="Завершающий комментарий"
                     value={resolution} 
