@@ -12,10 +12,9 @@ import { Textarea } from '../shared/FormElements/Textarea';
 
 export const CreateCase = () => {
     const user = useSelector(state => state.user.user);
+    const {isLoaded, officers } = useSelector(state => state.officers);
 
     const dispatch = useDispatch();
-    
-    useEffect( () => console.log('rerender Form'))
 
     const [licenseNumber, setLicenseNumber] = useState('');
     const [licenseNumberIsEmpty, setLicenseNumberIsEmpty] = useState(false);
@@ -36,8 +35,6 @@ export const CreateCase = () => {
         if (licenseNumber.trim() === '') setLicenseNumberIsEmpty(true);
         if (ownerFullName.trim() === '') setOwnerFullNameIsEmpty(true);
         if (type === '') setTypeIsEmpty(true);
-        
-        console.log(licenseNumber, ownerFullName, type, color, date, officer, description);
 
         if (licenseNumber.trim() !== '' && ownerFullName.trim() !== '' && type !== '') {
             dispatch(createCase(
@@ -49,13 +46,9 @@ export const CreateCase = () => {
     useEffect(() => {
         if (user) {
             dispatch(setNoLoadedOfficers());
-            console.log('запрос сотрудников');
             dispatch(getAllOfficers(user.token));
         }
-    },[])
-
-    const {isLoaded, officers } = useSelector(state => state.officers);
-    console.log(officers)
+    },[user])
 
     return (
         <>

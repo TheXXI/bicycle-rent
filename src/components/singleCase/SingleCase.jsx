@@ -12,7 +12,6 @@ import { Input } from "../shared/FormElements/Input";
 import { Textarea } from "../shared/FormElements/Textarea";
 
 export const SingleCase = () => {
-    //useEffect( () => {console.log('rerender SingleCase')});
     const {isLoaded, currentCase} = useSelector(state => state.singleCase);
     const officers  = useSelector(state => state.officers);
 
@@ -26,13 +25,12 @@ export const SingleCase = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-       dispatch(getCase(user.token, id));
-       console.log('getCase');
-
-       dispatch(setNoLoadedOfficers());
-       console.log('запрос сотрудников');
-       dispatch(getAllOfficers(user.token));
-    },[dispatch])
+        if (user) {
+            dispatch(getCase(user.token, id));
+            dispatch(setNoLoadedOfficers());
+            dispatch(getAllOfficers(user.token));
+        }
+    },[user])
 
     const [isEdit, setIsEdit] = useState(false);
 

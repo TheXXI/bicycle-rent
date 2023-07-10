@@ -27,11 +27,9 @@ export const Cases = () => {
     useEffect(() => {
         if (user) {
             dispatch(setNoLoadedCases());
-            console.log('запрос сообщений');
             dispatch(getAllCases(user.token));
 
             dispatch(setNoLoadedOfficers());
-            console.log('запрос сотрудников');
             dispatch(getAllOfficers(user.token));
         }
     },[dispatch, user])
@@ -39,8 +37,6 @@ export const Cases = () => {
     const deleteHandle = (id) => {
         dispatch(deleteCase(user.token, id));
     }
-
-    console.log(cases.cases)
     return(
         <>
         {cases.isLoaded && officers.isLoaded ?

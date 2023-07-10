@@ -9,7 +9,6 @@ import { setNoLoadedOfficers } from "../../store/officersReducer";
 
 
 export const Officers = () => {
-    useEffect( () => {console.log('rerender Officers')});
     const {isLoaded, officers } = useSelector(state => state.officers);
     
     const user = useSelector(state => state.user.user);
@@ -23,7 +22,6 @@ export const Officers = () => {
     useEffect(() => {
         if (user) {
             dispatch(setNoLoadedOfficers());
-            console.log('запрос сотрудников');
             dispatch(getAllOfficers(user.token));
         }
     },[dispatch])
@@ -32,8 +30,6 @@ export const Officers = () => {
         dispatch(setNoLoadedOfficers());
         dispatch(deleteOfficer(user.token, id, email));
     }
-
-    console.log(officers)
 
     return(
         <>

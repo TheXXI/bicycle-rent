@@ -7,8 +7,6 @@ import { auth } from '../../requests/auth';
 import { MessageBlock } from "./message/MessageBlock";
 
 export const Layout = () => {
-    useEffect( () => console.log('rerender Layout'))
-
     const dispatch = useDispatch()
 
     useEffect(() => {

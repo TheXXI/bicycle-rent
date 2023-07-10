@@ -15,9 +15,6 @@ export const signUp = (email, password, firstname, lastname) => {
         }
         if (firstname) body.firstName = firstname
         if (lastname) body.lastName = lastname
-
-        console.log(body)
-
         axios
             .post(url + "sign_up", body, {
                 headers: {
@@ -25,7 +22,6 @@ export const signUp = (email, password, firstname, lastname) => {
                 }
             })
             .then((response) => {
-                console.log('reg response: ', response.status)
                 if (response.status === 200) {
                     dispatch(setMessage({
                         success: true,
@@ -33,11 +29,9 @@ export const signUp = (email, password, firstname, lastname) => {
                     }))
                 }
             })
-            .catch((error) => { //ERR_BAD_REQUEST // Пользователь с email-адресом mail@mail.ru уже существует в базе данных
-                console.log('reg error: ', error)
+            .catch((error) => { 
                 switch (error.response.data.errCode) {
                     case "USER_EXISTS":
-                        console.log('Email занят');
                         dispatch(setEmailError('Email занят'));
                         break;
                     default:
@@ -65,10 +59,8 @@ export const signIn = (email, password) => {
                 dispatch(setUser(response.data.data));
             })
             .catch((error) => {
-                console.log(error.response.data.errCode)
                 switch (error.response.data.errCode) {
                     case "UNKNOWN_USER":
-                        console.log(1)
                         dispatch(setEmailError('Пользователь с таким email не существует'));
                         break;
                     case "INVALID_PASSWORD":
@@ -91,16 +83,11 @@ export const auth = () => {
         };
         axios.get(url, params)
             .then((response) => {
-                console.log(response)
                 if (response.status === 200) {
-                    console.log('Токен действителен')
                     dispatch(setUser(response.data.data));
-                } else {
-                    console.log('some error')
-                }
+                } 
             })
-            .catch((error) => {
-                console.log('Токен не действителен')
+            .catch(() => {
                 localStorage.clear();
             });
     }

@@ -33,10 +33,3 @@ export const Profile = () => {
         </>
     )
 }
-
-/*
-
-{user ? 
-            <Profile /> :
-            <Link to="/" className={css['lobin-button']}>Вход</Link>
-            }*/

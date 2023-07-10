@@ -21,7 +21,6 @@ export const getAllCases = (token) => {
                 }
             })
             .catch((error) => {
-                console.log("error: ", error)
                 dispatch(setMessage({
                     success: false,
                     text: `${error.response.data.message}`
@@ -39,14 +38,11 @@ export const getCase = (token, id) => {
                 }
             })
             .then((response) => {
-                console.log(response)
-                console.log(response.data)
                 if (response.status === 200) {
                     dispatch(setSingleCase(response.data.data))
                 }
             })
             .catch((error) => {
-                console.log(error)
                 dispatch(setSingleCaseError(error.response.data.message))
             })
     }
@@ -55,9 +51,6 @@ export const getCase = (token, id) => {
 export const createCase = (token, licenseNumber, ownerFullName, type, color, date, officer, description) => {
     return function(dispatch) {
         const user = store.getState().user.user;
-
-        console.log(user)
-
         let body = {
             licenseNumber,
             ownerFullName,
@@ -86,10 +79,6 @@ export const createCase = (token, licenseNumber, ownerFullName, type, color, dat
 
         axios.post(currentUrl, body, { headers })
             .then((response) => {
-                console.log("success: ", response)
-                console.log("success: ", response.data)
-                console.log("success: ", response.status)
-
                 if (response.status === 200) {
                     dispatch(setMessage({
                         success: true,
@@ -98,7 +87,6 @@ export const createCase = (token, licenseNumber, ownerFullName, type, color, dat
                 }
             })
             .catch((error) => {
-                console.log("error: ", error)
                 dispatch(setMessage({
                     success: false,
                     text: `${error.response.data.message}`
@@ -120,8 +108,6 @@ export const updateCase = (token, id, status, licenseNumber, type, ownerFullName
             description: description,
             resolution: resolution
         }
-        console.log(url + 'cases/' + id)
-        console.log(body)
         axios.put(url + 'cases/' + id, body, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -129,7 +115,6 @@ export const updateCase = (token, id, status, licenseNumber, type, ownerFullName
                 }
             })
             .then((response) => {
-                console.log(response)
                 if (response.status === 200) {
                     dispatch(setSingleCase(body))
                     dispatch(setMessage({
@@ -139,8 +124,6 @@ export const updateCase = (token, id, status, licenseNumber, type, ownerFullName
                 }
             })
             .catch((error) => {
-                console.log("error: ", error)
-                console.log("error id: ", id)
                 dispatch(setMessage({
                     success: false,
                     text: `${error.response.data.message}`
@@ -167,8 +150,6 @@ export const deleteCase = (token, id) => {
                 }
             })
             .catch((error) => {
-                console.log("error: ", error)
-                console.log("error id: ", id)
                 dispatch(setMessage({
                     success: false,
                     text: `${error.response.data.message}`

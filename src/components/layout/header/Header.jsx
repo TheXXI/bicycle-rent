@@ -7,11 +7,6 @@ import { IconOpenBurger } from '../../assets/icons/OpenBurger';
 import { useState } from 'react';
 import { Profile } from './Profile';
 import { removeUser } from '../../../store/userReducer';
-import { Button } from '../../shared/Button/Button';
-
-/*const isEntered () => {
-    const user = useSelector(state => state.user.user)
-}*/
 
 export const Header = () => {
     const user = useSelector(state => state.user.user)
@@ -48,10 +43,6 @@ export const Header = () => {
                             setIsOpenMobileMenu(false);
                         }}>Выйти</button>
                 </>:
-                // <Button onClick={() => {
-                //     navigate('/');
-                //     setIsOpenMobileMenu(false);
-                // }}>Войти</Button>}
                 <Link to="/" className={css['login-button']} onClick={() => setIsOpenMobileMenu(false)}>Вход</Link> }
             </div>}
         </>

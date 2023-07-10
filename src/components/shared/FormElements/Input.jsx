@@ -17,7 +17,6 @@ export const Input = (props) => {
             <input 
                 type={props.type ? props.type : "text"}
                 value={props.value}
-                valueAsDate={props.valueAsDate}
                 onChange={props.onChange}
                 checked={props.checked}
                 disabled={props.disabled}

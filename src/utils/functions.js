@@ -24,7 +24,7 @@ export const getApprovedOfficers = (officers) => {
 }
 
 export const getOfficerByEmail = (id, officers) => {
-    const email = id && officers ? officers.find(officer => officer._id === id).email : null;
-    if (email) return email;
+    const officer = id && officers ? officers.find(officer => officer._id === id) : null;
+    if (officer && officer.email) return officer.email;
     return "Не указан";
 }

@@ -7,8 +7,6 @@ import { Button } from "../shared/Button/Button";
 import { Input } from "../shared/FormElements/Input";
 
 export const SingleOfficer = () => {
-    useEffect( () => {console.log('rerender SingleOfficer')});
-    
     const user = useSelector(state => state.user.user);
     const navigate = useNavigate();
     useEffect(() => {
@@ -21,10 +19,10 @@ export const SingleOfficer = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-       dispatch(getOfficer(user.token, id));
-       console.log('getOfficer');
-       console.log(officer);
-    },[dispatch])
+        if (user) {
+            dispatch(getOfficer(user.token, id));
+        }
+    },[dispatch, user])
 
     const [isEdit, setIsEdit] = useState(false);
 
@@ -38,12 +36,10 @@ export const SingleOfficer = () => {
             setFirstname(officer.firstName ? officer.firstName : '');
             setLastname(officer.lastName ? officer.lastName : '');
             setApproved(officer.approved);
-            console.log('set', approved);
         }
     }, [officer])
 
     const handleClick = () => {
-        console.log(firstname, lastname, approved);
         setIsEdit(false);
         dispatch(updateOfficer(user.token, officer._id, firstname, lastname, approved))
     }

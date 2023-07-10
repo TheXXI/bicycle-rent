@@ -7,11 +7,10 @@ import { Input } from '../../shared/FormElements/Input';
 import { Button } from '../../shared/Button/Button';
 
 export const From = () => {
-    useEffect( () => console.log('rerender Form'))
     const { emailError, invalidPass } = useSelector(state => state.messagesAndLoader)
     const dispatch = useDispatch()
 
-    const [isRegistrationForm, setisRegistrationForm] = useState(false);
+    const [isRegistrationForm, setIsRegistrationForm] = useState(false);
 
     const [email, setEmail] = useState('');
     const [emailIsEmpty, setEmailIsEmpty] = useState(false)
@@ -27,18 +26,20 @@ export const From = () => {
     const [lastname, setLastname] = useState('')
 
     const handleClick = () => {
-        if (email === '') setEmailIsEmpty(true)
-        if (password === '') setPasswordIsEmpty(true)
-        if (isRegistrationForm && repeatPassword === '') setRepeatPasswordIsEmpty(true)
+        if (email === '') setEmailIsEmpty(true);
+        if (password === '') setPasswordIsEmpty(true);
+        if (isRegistrationForm && repeatPassword === '') setRepeatPasswordIsEmpty(true);
 
         //dispatch(signIn(email.toLowerCase(), password))
 
         if (isRegistrationForm && email !== '' && password !== '' && repeatPassword === password) {
-            dispatch(signUp(email.toLowerCase(), password, firstname, lastname))
+            dispatch(signUp(email.toLowerCase(), password, firstname, lastname));
         }
         else if (!isRegistrationForm && email !== '' && password !== '') {
-            dispatch(signIn(email.toLowerCase(), password))
+            dispatch(signIn(email.toLowerCase(), password));
         }
+
+        if (isRegistrationForm) setIsRegistrationForm(false);
     }
 
     return (
@@ -109,17 +110,15 @@ export const From = () => {
             <Button onClick={() => handleClick()}>{isRegistrationForm ? "Зарегистрироваться" : "Войти"}</Button>
             <button className={css['change-auth-from']} 
                 onClick={() => {
-                    // setIncorrectEmail(false)
-                    // setIncorrectPassword(false)
                     setEmail('');
                     setPassword('');
-                    setRepeatPassword('')
-                    setFirstname('')
-                    setLastname('')
-                    setEmailIsEmpty(false)
-                    setPasswordIsEmpty(false)
-                    setRepeatPasswordIsEmpty(false)
-                    setisRegistrationForm(!isRegistrationForm)
+                    setRepeatPassword('');
+                    setFirstname('');
+                    setLastname('');
+                    setEmailIsEmpty(false);
+                    setPasswordIsEmpty(false);
+                    setRepeatPasswordIsEmpty(false);
+                    setIsRegistrationForm(!isRegistrationForm);
                 }}>
                 { isRegistrationForm ? "Вход" : "Регистрация" }
             </button>

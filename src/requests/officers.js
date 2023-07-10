@@ -17,7 +17,6 @@ export const getAllOfficers = (token) => {
                 }
             })
             .catch((error) => {
-                console.log("error: ", error)
                 dispatch(setMessage({
                     success: false,
                     text: `${error.response.data.message}`
@@ -33,14 +32,11 @@ export const getOfficer = (token, id) => {
             "Content-type": "application/json"
         }})
         .then((response) => {
-            console.log(response)
-            console.log(response.data)
             if (response.status === 200) {
                 dispatch(setSingleOfficer(response.data.data))
             }
         })
         .catch((error) => {
-            console.log(error)
             dispatch(setSingleOfficerError(error.response.data.message))
         })
     }
@@ -53,8 +49,6 @@ export const updateOfficer = (token, id, firstname, lastname, approved) => {
             "Content-type": "application/json"
         }})
         .then((response) =>  {
-            console.log(response)
-            console.log(response.data)
             if (response.status === 200) {
                 dispatch(setSingleOfficer(response.data.data))
                 dispatch(setMessage({
@@ -64,7 +58,6 @@ export const updateOfficer = (token, id, firstname, lastname, approved) => {
             }
         })
         .catch((error) => {
-            console.log(error)
             dispatch(setMessage({
                 success: false,
                 text: `${error.response.data.message}`
@@ -90,8 +83,6 @@ export const deleteOfficer = (token, id, email) => {
                 }
             })
             .catch((error) => {
-                console.log("error: ", error)
-                console.log("error id: ", id)
                 dispatch(setMessage({
                     success: false,
                     text: `${error.response.data.message}`
