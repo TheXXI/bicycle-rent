@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/bicycle-rent/static/css/main.626f3fce.css",
+    "main.js": "/bicycle-rent/static/js/main.7e00efab.js",
+    "static/js/787.52f06e82.chunk.js": "/bicycle-rent/static/js/787.52f06e82.chunk.js",
+    "static/media/first-bicycle.jpg": "/bicycle-rent/static/media/first-bicycle.7a1ed75812f7c306f411.jpg",
+    "static/media/404.jpg": "/bicycle-rent/static/media/404.72a823a3f0799ac479de.jpg",
+    "index.html": "/bicycle-rent/index.html",
+    "main.626f3fce.css.map": "/bicycle-rent/static/css/main.626f3fce.css.map",
+    "main.7e00efab.js.map": "/bicycle-rent/static/js/main.7e00efab.js.map",
+    "787.52f06e82.chunk.js.map": "/bicycle-rent/static/js/787.52f06e82.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.626f3fce.css",
+    "static/js/main.7e00efab.js"
+  ]
+}
